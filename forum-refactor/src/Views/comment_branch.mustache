@@ -1,0 +1,41 @@
+<div class="comment-node" style="margin-left: {{ indent_px }}px;">
+  <div class="comment-meta">
+    <strong>{{ author_name }}</strong>
+    · Depth {{ depth }}
+    · {{ utc_created_at }}
+  </div>
+  <p>{{ body }}</p>
+
+  {{#has_children}}
+    <button
+      type="button"
+      class="js-toggle-replies"
+      data-target="children-{{ id }}"
+      aria-controls="children-{{ id }}"
+      aria-expanded="true"
+    >Hide replies</button>
+  {{/has_children}}
+
+  {{#is_authenticated}}
+    <details class="reply-form">
+      <summary>Reply to {{ author_name }}</summary>
+      <form method="post" action="/discussions/{{ discussion_id }}/replies">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="hidden" name="parent_id" value="{{ id }}">
+        <div>
+          <label for="reply-body-{{ id }}">Reply body</label>
+          <textarea id="reply-body-{{ id }}" name="body" required></textarea>
+        </div>
+        <button type="submit">Submit reply</button>
+      </form>
+    </details>
+  {{/is_authenticated}}
+
+  {{#has_children}}
+    <div id="children-{{ id }}" class="child-replies">
+      {{#children}}
+        {{> comment_branch }}
+      {{/children}}
+    </div>
+  {{/has_children}}
+</div>

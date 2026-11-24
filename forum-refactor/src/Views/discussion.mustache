@@ -1,0 +1,33 @@
+<article>
+  <h1>{{ discussion.title }}</h1>
+  <p class="comment-meta">By {{ discussion.author_name }} · {{ discussion.utc_created_at }}</p>
+  <p>{{ discussion.body }}</p>
+</article>
+
+<section aria-label="Replies">
+  <h2>Replies</h2>
+  {{#comments_tree}}
+    {{> comment_branch }}
+  {{/comments_tree}}
+  {{^comments_tree}}
+    <p>No replies yet.</p>
+  {{/comments_tree}}
+</section>
+
+<section aria-label="New top-level comment" style="margin-top: 2rem;">
+  <h3>Add a top-level comment</h3>
+  {{#is_authenticated}}
+    <form method="post" action="/discussions/{{ discussion.id }}/replies" class="reply-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="hidden" name="parent_id" value="">
+      <div>
+        <label for="top-level-body">Comment</label>
+        <textarea id="top-level-body" name="body" required></textarea>
+      </div>
+      <button type="submit">Post top-level comment</button>
+    </form>
+  {{/is_authenticated}}
+  {{^is_authenticated}}
+    <p>Guests can read discussions. <a href="/auth">Log in</a> to post a reply.</p>
+  {{/is_authenticated}}
+</section>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    header, nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .comment-node { border-left: 2px solid #cbd5e1; padding-left: 0.75rem; margin-top: 0.75rem; }
+    .comment-meta { font-size: 0.875rem; color: #475569; }
+    .reply-form { margin-top: 0.5rem; }
+    textarea { width: 100%; min-height: 70px; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <div><a href="/discussions/1"><strong>Nested Forum Lab</strong></a></div>
+    <nav>
+      {{#current_user}}
+        <span>Signed in as <strong>{{ username }}</strong></span>
+        <form method="post" action="/logout" style="display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button type="submit">Log out</button>
+        </form>
+      {{/current_user}}
+      {{^current_user}}
+        <a href="/auth">Log in / Register</a>
+      {{/current_user}}
+    </nav>
+  </header>
+  <main>
+    {{{ body_html }}}
+  </main>
+  <script src="/assets/thread-toggle.js" defer></script>
+</body>
+</html>

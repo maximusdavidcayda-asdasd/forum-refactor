@@ -1,0 +1,17 @@
+{
+  "name": "lab/nested-forum-refactor",
+  "description": "MVC Nested Forum Replies Lab with PHP, PDO, Bramus Router, and Mustache",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "bramus/router": "~1.6",
+    "mustache/mustache": "^2.14"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}
